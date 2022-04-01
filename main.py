@@ -2,8 +2,8 @@ import os
 import telebot
 from flask import Flask, request
 
-TOKEN = '1810242195:AAFfImqq9mPT81rs3ApL74eUob5u8A9oxb8'
-APP_URL = f'https://vitaljaheroku.herokuapp.com/{TOKEN}'
+TOKEN = '5101765622:AAHfaWFO3a7gS-kE4GEn6LLnHyF6eKAJdI0'
+APP_URL = f'https://git.heroku.com/lunchbotdvc.git/{TOKEN}'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
