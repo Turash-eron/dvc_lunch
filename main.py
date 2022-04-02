@@ -38,7 +38,7 @@ async def echo(message: types.Message):
     await message.answer(message.text)
 
 
- if __name__ == '__main__':
+if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     start_webhook(
         dispatcher=dp,
@@ -47,7 +47,4 @@ async def echo(message: types.Message):
         on_startup=on_startup,
         on_shutdown=on_shutdown,
         host=WEBAPP_HOST,
-        port=WEBAPP_PORT,
-    )
-    
-    
+        port=WEBAPP_PORT)
