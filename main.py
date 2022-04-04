@@ -37,7 +37,7 @@ async def lunch_print():
     await bot.send_message(-596089645, "Lunch time")
 #  Function --- Schedules a timer to notify about lunch 
 async def scheduler(useridforreply):
-    aioschedule.every().day.at("21:23").do(lunch_print)
+    aioschedule.every().day.at("21:29").do(lunch_print)
         # Sending messages by ID
         #async def process_start_command(message: types.Message):
             #await bot.send_message(450689077, "Lunch time!")
