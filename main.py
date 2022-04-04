@@ -31,14 +31,18 @@ async def on_startup(dispatcher):
 async def on_shutdown(dispatcher):
     await bot.delete_webhook()
     
+    
+async def lunch_print():
+    await bot.send_message(450689077, "Lunch time!")
+    await bot.send_message(-596089645, "Lunch time")
 #  Function --- Schedules a timer to notify about lunch 
 async def scheduler(useridforreply):
-    aioschedule.every().day.at("21:23").do:
+    aioschedule.every().day.at("21:23").do(lunch_print)
         # Sending messages by ID
-        async def process_start_command(message: types.Message):
-            await bot.send_message(450689077, "Lunch time!")
-         async def process_start_command(message: types.Message):
-            await bot.send_message(-596089645, "Lunch time")
+        #async def process_start_command(message: types.Message):
+            #await bot.send_message(450689077, "Lunch time!")
+         #async def process_start_command(message: types.Message):
+           # await bot.send_message(-596089645, "Lunch time")
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
