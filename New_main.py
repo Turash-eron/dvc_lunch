@@ -23,18 +23,30 @@ WEBHOOK_URL = f'{WEBHOOK_HOST}{WEBHOOK_PATH}'
 WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.getenv('PORT', default=8000)
 
-
+#  STARTUP - Standard operations <<<---------------------
 async def on_startup(dispatcher):
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
 
-
+#  SHUTDOWN - Standard operations -------------------->>>
 async def on_shutdown(dispatcher):
     await bot.delete_webhook()
 
+#  Function --- Schedule lunch 
+async def scheduler():
+    aioschedule.every().day.at("10:51").do(noon_print)
+    while True:
+        await aioschedule.run_pending()
+        await asyncio.sleep(1)
 
+#  Message handler --- Receives input from client and starts scheduler 
 @dp.message_handler()
 async def echo(message: types.Message):
     await message.answer(message.text)
+    asyncio.create_task(scheduler())
+
+    
+#async def on_startup(_):
+#    asyncio.create_task(scheduler())
 
 
 if __name__ == '__main__':
