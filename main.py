@@ -30,28 +30,28 @@ async def on_startup(dispatcher):
 #  SHUTDOWN - Standard operations -------------------->>>
 async def on_shutdown(dispatcher):
     await bot.delete_webhook()
-
-#  Function for lunch printing
-async def lunch_print():
-    print("It's noon!")
     
-#  Function --- Schedule lunch 
-async def scheduler():
-    aioschedule.every().day.at("20:40").do(lunch_print)
+#  Function --- Schedules a timer to notify about lunch 
+async def scheduler(useridforreply):
+    aioschedule.every().day.at("21:23").do:
+        # Sending messages by ID
+        async def process_start_command(message: types.Message):
+            await bot.send_message(450689077, "Lunch time!")
+         async def process_start_command(message: types.Message):
+            await bot.send_message(-596089645, "Lunch time")
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
 
-#  Message handler --- Receives input from client and starts scheduler 
-#@dp.message_handler()
-#async def echo(message: types.Message):
-#    await message.answer(message.text)
-
+#  1.0 Handler for /timer function    
 @dp.message_handler(commands=['timer'])
+#  1.1 Welcome message
+async def send_welcome(msg: types.Message):
+    await msg.reply_to_message(f‘Я бот. Приятно познакомиться,
+                               {msg.from_user.first_name}. Я буду напоминать вам про ланч.’)
+#  1.2 Schedule a task 
 async def process_start_command(message: types.Message):
     asyncio.create_task(scheduler())  
-
-
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
@@ -63,3 +63,6 @@ if __name__ == '__main__':
         on_shutdown=on_shutdown,
         host=WEBAPP_HOST,
         port=WEBAPP_PORT)
+    
+            #async def process_start_command(message: types.Message):
+            #await bot.send_message(message.from_user.id, "test message")
