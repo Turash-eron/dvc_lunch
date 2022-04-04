@@ -37,7 +37,7 @@ async def lunch_print():
     
 #  Function --- Schedule lunch 
 async def scheduler():
-    aioschedule.every().day.at("23:37").do(lunch_print)
+    aioschedule.every().day.at("20:40").do(lunch_print)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
