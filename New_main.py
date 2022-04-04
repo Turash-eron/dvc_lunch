@@ -31,9 +31,13 @@ async def on_startup(dispatcher):
 async def on_shutdown(dispatcher):
     await bot.delete_webhook()
 
+#  Function for lunch printing
+async def lunch_print():
+    print("It's noon!")
+    
 #  Function --- Schedule lunch 
 async def scheduler():
-    aioschedule.every().day.at("10:51").do(noon_print)
+    aioschedule.every().day.at("11:20").do(lunch_print)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
