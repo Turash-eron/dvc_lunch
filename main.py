@@ -33,11 +33,11 @@ async def on_shutdown(dispatcher):
     
     
 async def lunch_print():
-    await bot.send_message(450689077, "Lunch time!")
-    await bot.send_message(-596089645, "Lunch time")
+    await bot.send_message(450689077, "Lunch time! Приятного!")
+    await bot.send_message(-596089645, "Lunch time! Приятного!")
 #  Function --- Schedules a timer to notify about lunch 
 async def scheduler(useridforreply):
-    aioschedule.every().day.at("21:32").do(lunch_print)
+    aioschedule.every().day.at("21:34").do(lunch_print)
         # Sending messages by ID
         #async def process_start_command(message: types.Message):
             #await bot.send_message(450689077, "Lunch time!")
@@ -51,7 +51,7 @@ async def scheduler(useridforreply):
 @dp.message_handler(commands=['timer'])
 #  1.1 Welcome message
 async def send_welcome(msg: types.Message):
-    await msg.reply_to_message('Я бот. Приятно познакомиться. Я буду напоминать вам про ланч.’)
+    await msg.reply_to_message('Я бот. Приятно познакомиться. Я буду напоминать вам про ланч!')
 #  1.2 Schedule a task 
 async def process_start_command(message: types.Message):
     asyncio.create_task(scheduler())  
