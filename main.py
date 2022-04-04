@@ -37,20 +37,20 @@ async def lunch_print():
     
 #  Function --- Schedule lunch 
 async def scheduler():
-    aioschedule.every().day.at("11:10").do(lunch_print)
+    aioschedule.every().day.at("23:37").do(lunch_print)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
 
 #  Message handler --- Receives input from client and starts scheduler 
-@dp.message_handler()
-async def echo(message: types.Message):
-    await message.answer(message.text)
-    asyncio.create_task(scheduler())
+#@dp.message_handler()
+#async def echo(message: types.Message):
+#    await message.answer(message.text)
 
-    
-#async def on_startup(_):
-#    asyncio.create_task(scheduler())
+@dp.message_handler(commands=['timer'])
+async def process_start_command(message: types.Message):
+    asyncio.create_task(scheduler())  
+
 
 
 if __name__ == '__main__':
