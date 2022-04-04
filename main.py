@@ -37,7 +37,7 @@ async def lunch_print():
     await bot.send_message(-596089645, "Lunch time! Приятного!")
 #  Function --- Schedules a timer to notify about lunch 
 async def scheduler(useridforreply):
-    aioschedule.every().day.at("21:45").do(lunch_print)
+    aioschedule.every().day.at("21:46").do(lunch_print)
         
     #  Completing the precess until there are no more in queue
     while True:
@@ -47,8 +47,8 @@ async def scheduler(useridforreply):
 #  1.0 Handler for /timer function    
 @dp.message_handler(commands=['timer'])
 #  1.1 Welcome message
-'''async def send_welcome(msg: types.Message):
-    await msg.reply_to_message('Я бот. Приятно познакомиться. Я буду напоминать вам про ланч!')'''
+#async def send_welcome(msg: types.Message):
+    #await msg.reply_to_message('Я бот. Приятно познакомиться. Я буду напоминать вам про ланч!')'''
 #  1.2 Schedule a task 
 async def process_start_command(message: types.Message):
     asyncio.create_task(scheduler())  
