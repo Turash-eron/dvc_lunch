@@ -72,7 +72,7 @@ async def lunch_status_check(message: types.Message):
         asyncio.create_task(scheduler())
     elif lunch_flag == 1:
         for idnum in chats:
-            await bot.send_message(idnum, "Так, братан, я включен, не мороси...")
+            await bot.send_message(idnum, "you suck...")
 
 ###############################################################
 ###############################################################
