@@ -49,11 +49,11 @@ async def on_shutdown(dispatcher):
 #  ***** ***** ***** BOT LOGIC DESCRIPTION ***** ***** *****  #
 
 async def lunch_print():
-    await bot.send_message(450689077, "Lunch time! Сегодня на очереди: " + str(restaurants[randint(0, len(restaurants)-1)]) + "! Приятного!")
+    await bot.send_message(-596089645, "Lunch time! Сегодня на очереди: " + str(restaurants[randint(0, len(restaurants)-1)]) + "! Приятного!")
     #await bot.send_message(-596089645, "Lunch time! Приятного!")
 #  Function --- Schedules a timer to notify about lunch 
 async def scheduler():
-    aioschedule.every().day.at("10:00").do(lunch_print)
+    aioschedule.every().day.at("10:05").do(lunch_print)
         
     #  Completing the precess until there are no more in queue
     while True:
