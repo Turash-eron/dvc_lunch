@@ -7,6 +7,7 @@ from aiogram.utils.executor import start_webhook
 from aiogram import Bot, types
 import asyncio
 import aioschedule
+from random import randint
 
 #  Getting constants from Heroku environment 
 TOKEN = os.getenv('BOT_TOKEN')
@@ -23,6 +24,18 @@ WEBHOOK_URL = f'{WEBHOOK_HOST}{WEBHOOK_PATH}'
 WEBAPP_HOST = '0.0.0.0'
 WEBAPP_PORT = os.getenv('PORT', default=8000)
 
+#  Defining additional variables 
+lunch_flag = 0
+chats = [450689077, -596089645]
+restaurants = ['Обед-Буфет',
+               'Чихо',
+               'Корнер с шурмой',
+               'Дегустатор',
+               'Советская столовка',
+               'Прайм-биф',
+               'Индийская точка',
+               'Meat&Fish']
+
 #  STARTUP - Standard operations <<<---------------------
 async def on_startup(dispatcher):
     await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
@@ -31,10 +44,13 @@ async def on_startup(dispatcher):
 async def on_shutdown(dispatcher):
     await bot.delete_webhook()
     
-    
+
+###############################################################
+#  ***** ***** ***** BOT LOGIC DESCRIPTION ***** ***** *****  #
+
 async def lunch_print():
-    await bot.send_message(450689077, "Lunch time! Приятного!")
-    await bot.send_message(-596089645, "Lunch time! Приятного!")
+    await bot.send_message(450689077, "Lunch time! Сегодня на очереди: " + str(restaurants[randint(0, len(restaurants)-1)]) + "! Приятного!")
+    #await bot.send_message(-596089645, "Lunch time! Приятного!")
 #  Function --- Schedules a timer to notify about lunch 
 async def scheduler():
     aioschedule.every().day.at("10:00").do(lunch_print)
@@ -44,15 +60,24 @@ async def scheduler():
         await aioschedule.run_pending()
         await asyncio.sleep(1)
 
-#  1.0 Handler for /timer function    
+#  Handler for /timer function
 @dp.message_handler(commands=['timer'])
-#  1.1 Welcome message
-#async def send_welcome(msg: types.Message):
-    #await msg.reply_to_message('Я бот. Приятно познакомиться. Я буду напоминать вам про ланч!')'''
-#  1.2 Schedule a task 
-async def process_start_command(message: types.Message):
-    asyncio.create_task(scheduler())  
+async def lunch_status_check(message: types.Message):
+    global lunch_flag
+    if lunch_flag == 0:
+        for idnum in chats:
+            await bot.send_message(idnum, "Бот включен. Сегодня про обед вы не забудете!")
+            print('nen')
+        lunch_flag = 1
+        asyncio.create_task(scheduler())
+    elif lunch_flag == 1:
+        for idnum in chats:
+            await bot.send_message(idnum, "Так, братан, я включен, не мороси...")
 
+###############################################################
+###############################################################
+    
+#  Script starter 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     start_webhook(
@@ -63,12 +88,3 @@ if __name__ == '__main__':
         on_shutdown=on_shutdown,
         host=WEBAPP_HOST,
         port=WEBAPP_PORT)
-    
-            #async def process_start_command(message: types.Message):
-            #await bot.send_message(message.from_user.id, "test message")
-            
-                    # Sending messages by ID
-        #async def process_start_command(message: types.Message):
-            #await bot.send_message(450689077, "Lunch time!")
-         #async def process_start_command(message: types.Message):
-           # await bot.send_message(-596089645, "Lunch time")
