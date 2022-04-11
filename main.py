@@ -74,6 +74,11 @@ async def lunch_status_check(message: types.Message):
         for idnum in chats:
             await bot.send_message(idnum, "you suck...")
 
+            
+@dp.message_handler(commands=['change'])
+async def lunch_status_check(message: types.Message):
+    await bot.send_message(-596089645, "Ок, как насчет: " + str(restaurants[randint(0, len(restaurants)-1)]) + "? М-м-м?...")
+
 ###############################################################
 ###############################################################
     
