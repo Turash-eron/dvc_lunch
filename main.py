@@ -34,7 +34,9 @@ restaurants = ['Обед-Буфет',
                'Советская столовка',
                'Прайм-биф',
                'Индийская точка',
-               'Meat&Fish']
+               'Meat&Fish',
+               'Дальний Дегустатор',
+               'Underground']
 
 #  STARTUP - Standard operations <<<---------------------
 async def on_startup(dispatcher):
@@ -48,10 +50,11 @@ async def on_shutdown(dispatcher):
 ###############################################################
 #  ***** ***** ***** BOT LOGIC DESCRIPTION ***** ***** *****  #
 
+#  Basic lunch message
 async def lunch_print():
     await bot.send_message(-596089645, "Lunch time! Сегодня на очереди: " + str(restaurants[randint(0, len(restaurants)-1)]) + "! Приятного!")
-    #await bot.send_message(-596089645, "Lunch time! Приятного!")
-#  Function --- Schedules a timer to notify about lunch 
+
+#  Function - schedules a given task
 async def scheduler():
     aioschedule.every().day.at("10:00").do(lunch_print)
         
