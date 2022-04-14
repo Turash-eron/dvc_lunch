@@ -5,7 +5,7 @@ from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
 from aiogram import Bot, types
-from aiogram.methods.send_poll import SendPoll
+from aiogram.methods import SendPoll
 import asyncio
 import aioschedule
 from random import randint, sample
