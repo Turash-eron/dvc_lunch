@@ -63,7 +63,7 @@ async def lunch_print():
 
 #  Function - schedules a given task
 async def scheduler():
-    aioschedule.every().day.at("10:05").do(lunch_print)
+    aioschedule.every().day.at("10:10").do(lunch_print)
         
     #  Completing the precess until there are no more in queue
     while True:
