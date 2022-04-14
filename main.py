@@ -5,9 +5,10 @@ from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
 from aiogram import Bot, types
+from aiogram.methods.send_poll import SendPoll
 import asyncio
 import aioschedule
-from random import randint
+from random import randint, sample
 
 #  Getting constants from Heroku environment 
 TOKEN = os.getenv('BOT_TOKEN')
@@ -53,6 +54,11 @@ async def on_shutdown(dispatcher):
 #  Basic lunch message
 async def lunch_print():
     await bot.send_message(-596089645, "Lunch time! Сегодня на очереди: " + str(restaurants[randint(0, len(restaurants)-1)]) + "! Приятного!")
+    await bot.send_poll(chat_id=-596089645,
+                        question='Куда идем?',
+                        options=random.sample(restaurants, 3),
+                        type='regular',
+                        is_anonymous=False)
 
 #  Function - schedules a given task
 async def scheduler():
