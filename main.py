@@ -5,6 +5,8 @@ from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
 from aiogram import Bot, types
+from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import asyncio
 import aioschedule
 from random import randint, sample
@@ -50,6 +52,18 @@ async def on_shutdown(dispatcher):
 
 ###############################################################
 #  ***** ***** ***** BOT LOGIC DESCRIPTION ***** ***** *****  #
+
+#  Defining the keyboard 
+button1 = InlineKeyboardButton(text="👋 Set alarm", callback_data="/timer")
+button2 = InlineKeyboardButton(text="💋 Change place", callback_data="/change")
+keyboard_inline = InlineKeyboardMarkup().add(button1, button2)
+keyboard1 = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add("👋 Hello!", "💋 Youtube")
+
+#  Dealing with /start and /help commands
+@dp.message_handler(commands=['start', 'help'])
+async def welcome(message: types.Message):
+    await message.reply("Hello! Im Gunther Bot, Please follow my YT channel", reply_markup=keyboard1)
+
 
 #  Basic lunch message
 async def lunch_print():
