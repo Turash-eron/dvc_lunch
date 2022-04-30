@@ -57,7 +57,7 @@ async def on_shutdown(dispatcher):
 button1 = InlineKeyboardButton(text="👋 Set alarm", callback_data="/timer")
 button2 = InlineKeyboardButton(text="💋 Change place", callback_data="/change")
 keyboard_inline = InlineKeyboardMarkup().add(button1, button2)
-keyboard1 = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add("👋 Hello!", "💋 Youtube")
+keyboard1 = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add("👋 Set alarm", "💋 Change place")
 
 #  Dealing with /start and /help commands
 @dp.message_handler(commands=['start', 'help'])
