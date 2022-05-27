@@ -1,15 +1,17 @@
 #  Importing libs
 import logging
 import os
+import asyncio
+import aioschedule
+from random import randint, sample
+
+#  Aiogram things
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
 from aiogram import Bot, types
 from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-import asyncio
-import aioschedule
-from random import randint, sample
 
 #  Getting constants from Heroku environment 
 TOKEN = os.getenv('BOT_TOKEN')
@@ -53,16 +55,17 @@ async def on_shutdown(dispatcher):
 ###############################################################
 #  ***** ***** ***** BOT LOGIC DESCRIPTION ***** ***** *****  #
 
-#  Defining the keyboard 
-button1 = InlineKeyboardButton(text="👋 Set alarm", callback_data="/timer")
-button2 = InlineKeyboardButton(text="💋 Change place", callback_data="/change")
-keyboard_inline = InlineKeyboardMarkup().add(button1, button2)
-keyboard1 = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add("👋 Set alarm", "💋 Change place")
+#  Defining the keyboard markup
+bt1 = KeyboardButton('/start')
+bt2 = KeyboardButton('/help')
+bt3 = KeyboardButton('/timer')
+bt4 = KeyboardButton('/change')
+kb_markup1 = ReplyKeyboardMarkup().add(bt1).add(bt2).add(bt3).add(bt4)
 
 #  Dealing with /start and /help commands
 @dp.message_handler(commands=['start', 'help'])
 async def welcome(message: types.Message):
-    await message.reply("Hello! Im Gunther Bot, Please follow my YT channel", reply_markup=keyboard1)
+    await message.reply("Здорова! С вами Лунчер. Я буду следить за вашей диетой", kb_markup1)
 
 
 #  Basic lunch message
@@ -76,7 +79,7 @@ async def lunch_print():
 
 #  Function - schedules a given task
 async def scheduler():
-    aioschedule.every().day.at("10:10").do(lunch_print)
+    aioschedule.every().day.at("10:00").do(lunch_print)
         
     #  Completing the precess until there are no more in queue
     while True:
@@ -95,7 +98,7 @@ async def lunch_status_check(message: types.Message):
         asyncio.create_task(scheduler())
     elif lunch_flag == 1:
         for idnum in chats:
-            await bot.send_message(idnum, "you suck...")
+            await bot.send_message(idnum, "you suck... братан")
 
             
 @dp.message_handler(commands=['change'])
