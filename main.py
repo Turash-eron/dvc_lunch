@@ -63,11 +63,17 @@ bt4 = KeyboardButton('/change')
 kb_markup1 = ReplyKeyboardMarkup().add(bt1).add(bt2).add(bt3).add(bt4)
 
 #  Dealing with /start and /help commands
-@dp.message_handler(commands=['start', 'help'])
+@dp.message_handler(commands=['start'])
 async def welcome(message: types.Message):
-    await message.reply("Здорова! С вами Лунчер. Я буду следить за вашей диетой", kb_markup1)
+    await message.reply("Здорова! С вами Лунчер. Я буду следить за вашей диетой")
 
-
+@dp.message_handler(commands=['help'])
+async def welcome(message: types.Message):
+    await message.reply("""
+    Мои команды
+    /timer - поставить будильник на обед
+    /change - изменить место, если предложенное не понравилось""")
+    
 #  Basic lunch message
 async def lunch_print():
     await bot.send_message(-596089645, "Lunch time! Сегодня на очереди: " + str(restaurants[randint(0, len(restaurants)-1)]) + "! Приятного!")
