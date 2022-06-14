@@ -106,11 +106,22 @@ async def lunch_status_check(message: types.Message):
         for idnum in chats:
             await bot.send_message(idnum, "you suck... братан")
 
-            
-@dp.message_handler(commands=['change'])
+#  Chnage place             
+@dp.message_handler(commands=['quiz'])
 async def lunch_status_check(message: types.Message):
     await bot.send_message(-596089645, "Ок, как насчет: " + str(restaurants[randint(0, len(restaurants)-1)]) + "? М-м-м?...")
 
+#  Poll examples - test
+@dp.message_handler(commands=['timer'])
+async def lunch_status_check(message: types.Message):
+    await bot.send_poll(message.chat.id,
+                        'Choose your fighter!',
+                        restaurants,
+                        type='quiz', correct_option_id=0,
+                        is_anonymous=False)    
+  
+  
+    
 ###############################################################
 ###############################################################
     
