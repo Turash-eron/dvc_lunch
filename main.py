@@ -114,7 +114,7 @@ async def lunch_status_check(message: types.Message):
 #  Poll examples - test
 @dp.message_handler(commands=['quiz'])
 async def quizlet(message: types.Message):
-    await bot.send_poll(message.chat.-596089645,
+    await bot.send_poll(message.chat.id,
                         'Choose your fighter!',
                         restaurants,
                         type='quiz', correct_option_id=0,
