@@ -109,9 +109,11 @@ async def lunch_status_check(message: types.Message):
 #  Poll examples - test
 @dp.message_handler(commands=['quiz'])
 async def quizlet(message: types.Message):
+    await message.reply("Сколько мест выберем? От 2 до 10 плиз, у меня нет юнит-тестов...")
+    num_places = int(str(message.text))
     await bot.send_poll(message.chat.id,
                         'Choose your fighter!',
-                        restaurants,
+                        restaurants[0:num_places],
                         type='quiz',
                         correct_option_id=0,
                         is_anonymous=False)    
