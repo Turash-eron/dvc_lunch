@@ -109,15 +109,34 @@ async def lunch_status_check(message: types.Message):
 #  Poll examples - test
 @dp.message_handler(commands=['quiz'])
 async def quizlet(message: types.Message):
+    await Form.name.set()
     await message.reply("Сколько мест выберем? От 2 до 10 плиз, у меня нет юнит-тестов...")
-    num_places = int(str(message.text))
-    await bot.send_poll(message.chat.id,
+
+#  Добавляем возможность отмены, если пользователь передумал заполнять
+@dp.message_handler(state='*', commands='cancel')
+@dp.message_handler(Text(equals='отмена', ignore_case=True), state='*')
+async def cancel_handler(message: types.Message, state: FSMContext):
+    current_state = await state.get_state()
+    if current_state is None:
+        return
+
+    await state.finish()
+    await message.reply('ОК')
+
+
+#  Сюда приходит ответ с именем
+@dp.message_handler(state=Form.name)
+async def process_name(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        num_places = int(str(message.text))
+
+    await bot.send_poll(-596089645,
                         'Choose your fighter!',
                         restaurants[0:num_places],
                         type='quiz',
                         correct_option_id=0,
                         is_anonymous=False)    
-  
+    await state.finish()
   
     
 ###############################################################
