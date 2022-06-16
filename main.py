@@ -71,16 +71,12 @@ async def welcome(message: types.Message):
     await message.reply("""
     Мои команды
     /timer - поставить будильник на обед
-    /change - изменить место, если предложенное не понравилось""")
+    /change - изменить место, если предложенное не понравилось
+    /quiz - запустить голосовалку на 2-10 мест""")
     
 #  Basic lunch message
 async def lunch_print():
     await bot.send_message(-596089645, "Lunch time! Сегодня на очереди: " + str(restaurants[randint(0, len(restaurants)-1)]) + "! Приятного!")
-    #await bot.send_poll(chat_id=-596089645,
-    #                    question='Куда идем?',
-    #                    options=random.sample(restaurants, 3),
-    #                    type='regular',
-    #                    is_anonymous=False)
 
 #  Function - schedules a given task
 async def scheduler():
@@ -98,12 +94,12 @@ async def lunch_status_check(message: types.Message):
     if lunch_flag == 0:
         for idnum in chats:
             await bot.send_message(idnum, "Бот включен. Сегодня про обед вы не забудете!")
-            print('nen')
+            print('nen')  # This message prints to Heroku logs
         lunch_flag = 1
         asyncio.create_task(scheduler())
     elif lunch_flag == 1:
         for idnum in chats:
-            await bot.send_message(idnum, "you suck... братан")
+            await bot.send_message(idnum, "no push, please")
 
 #  Chnage place             
 @dp.message_handler(commands=['change'])
@@ -116,7 +112,8 @@ async def quizlet(message: types.Message):
     await bot.send_poll(message.chat.id,
                         'Choose your fighter!',
                         restaurants,
-                        type='quiz', correct_option_id=0,
+                        type='quiz',
+                        correct_option_id=0,
                         is_anonymous=False)    
   
   
