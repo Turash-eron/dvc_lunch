@@ -114,20 +114,6 @@ async def quizlet(message: types.Message):
                         correct_option_id=0,
                         is_anonymous=False)    
 
-
-#  Сюда приходит ответ с именем
-@dp.message_handler(state=Form.name)
-async def process_name(message: types.Message, state: FSMContext):
-    async with state.proxy() as data:
-        num_places = int(str(message.text))
-
-    await bot.send_poll(-596089645,
-                        'Choose your fighter!',
-                        restaurants[0:num_places],
-                        type='quiz',
-                        correct_option_id=0,
-                        is_anonymous=False)    
-    await state.finish()
   
     
 ###############################################################
